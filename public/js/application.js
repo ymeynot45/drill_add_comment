@@ -1,34 +1,59 @@
 $(document).ready(function() {
 
-    var comment_ul = document.getElementById('comment_list');
-    var newcomment = document.createElement('li');
-    var newform = document.createElement('form');
+  // lines 4-6 could be done with jQuery as var comment_ul = $('#comment_list'); etc
+  var comment_ul = document.getElementById('comment_list');
+  var newcomment = document.createElement('li');
+  var newform = document.createElement('form');
 
-var createForm = function() {
-    $form = $("<form action=/create_comment method=post></form");
-    $form.append("<input type=text name=comment placeholder='comment goes here'/>");
-    $form.append("</br>");
-    $form.append("<input type=text name=author placeholder='author goes here'/>");
-    $form.append("</br>");
-    $form.append("<input id='submitcomment' type=submit value=create>");
-    $('.container').append($form);
-};
-    $('#new_comment_button').click(function() {
-      $('#new_comment_button').hide();
-      createForm();
+  var createForm = function() {
+    return "<form id='js_form' action='create_comment' method='POST'>" +
+    "<input id='comment' type='text' name='comment' placeholder='comment goes here'/> </br>" +
+    "<input id='author' type='text' name='author' placeholder='author goes here'/> </br>" +
+    "<input id='submitcomment' type='submit' value='create'>" +
+    "</form>";
+  };
+
+  var createComment = function(comment, author) {
+    return "<li>" + comment + "<span class='author'>" + author + "</span>" + "</li>";
+  }
+    
+  $('#new_comment_button').click(function() {
+    $('#new_comment_button').hide();
+    $('.container').append(createForm());
+
 
     $("#submitcomment").on("click", function(event) {
-      event.preventDefault() 
+      event.preventDefault();
+      var comment = $('#comment').val();
+      var author  = $('#author').val(); 
+      $('#js_form').hide();
+      $('#new_comment_button').show();
+      if (comment != "")
+      {
+        // debugger;
+        $('#comment_list').append(createComment(comment,author));
+      }
+
+
+
+
+
+
+
+      // debugger;
+
+
+
+      // console.log(event);
+      
+    });
 
   });
-
 
 
       // createForm();
       // comment_ul.appendChild(newcomment);
     // $(document).getElementById('#comment_list').appendChild(newcomment);
-  
-    });
     
 });
 
